@@ -67,7 +67,7 @@ func (bm *BenchmarkAerospike) GenData() {
 		go func(idx int) {
 			for j := idx * n; j < (idx+1)*n; j++ {
 				key := fmt.Sprintf(KeyPrefix, j)
-				value := fmt.Sprintf("%0100d", time.Now().UnixNano())
+				value := fmt.Sprintf(Cfg.Common.ValFmt, time.Now().UnixNano())
 
 				k, err := aerospike.NewKey(Cfg.Aerospike.Namespace, Cfg.Aerospike.Set, key)
 				if err != nil {
@@ -174,7 +174,7 @@ func (bm *BenchmarkAerospike) startWrite(idx int) {
 	for i := idx * n; i < (idx+1)*n; i++ {
 		ts := time.Now().UnixNano()
 		key = fmt.Sprintf(KeyPrefix, i)
-		value = fmt.Sprintf("%0100d", time.Now().UnixNano())
+		value = fmt.Sprintf(Cfg.Common.ValFmt, time.Now().UnixNano())
 
 		k, err := aerospike.NewKey(Cfg.Aerospike.Namespace, Cfg.Aerospike.Set, key)
 		if err != nil {

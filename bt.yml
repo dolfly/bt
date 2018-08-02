@@ -1,7 +1,8 @@
 common:
   thread: 1000
   key_num: 1000000000
-  key_pre: ":%010d"
+  key_fmt: ":%010d"
+  val_fmt: "%0100d"
 
 aerospike:
   host: ["127.0.0.1:3000"]

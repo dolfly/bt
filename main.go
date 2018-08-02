@@ -19,7 +19,8 @@ type Config struct {
 	Common struct {
 		Thread int
 		KeyNum int    `yaml:"key_num"`
-		KeyPre string `yaml:"key_pre"`
+		KeyFmt string `yaml:"key_fmt"`
+		ValFmt string `yaml:"val_fmt"`
 	}
 	Aerospike struct {
 		Host      []string
@@ -46,8 +47,6 @@ func main() {
 	flag.BoolVar(&gen, "g", false, "create testing data")
 	flag.Parse()
 
-	KeyPrefix = pre + Cfg.Common.KeyPre
-
 	b, err := ioutil.ReadFile(file)
 	if err != nil {
 		panic(err)
@@ -55,6 +54,8 @@ func main() {
 	if err = yaml.Unmarshal(b, &Cfg); err != nil {
 		panic(err)
 	}
+
+	KeyPrefix = pre + Cfg.Common.KeyFmt
 
 	bm, err := NewBenchmarkTool(typ)
 	if err != nil {
