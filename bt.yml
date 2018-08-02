@@ -1,0 +1,11 @@
+common:
+  thread: 1000
+  key_num: 1000000000
+  key_pre: ":%010d"
+
+aerospike:
+  host: ["127.0.0.1:3000"]
+  port: 3000
+  namespace: test
+  set: set
+  bin: bin
