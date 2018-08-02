@@ -184,6 +184,7 @@ func (bm *BenchmarkAerospike) startWrite(idx int) {
 		bin := &aerospike.Bin{Name: Cfg.Aerospike.Bin, Value: aerospike.NewStringValue(value)}
 		err = bm.RP.PutBins(bm.writePolicy, k, bin)
 		if err != nil {
+			fmt.Println(err)
 			fail++
 		} else {
 			success++
