@@ -29,6 +29,7 @@ func NewBenchmarkAerospike() (*BenchmarkAerospike, error) {
 	bm.writePolicy = aerospike.NewWritePolicy(0, 0)
 	bm.writePolicy.Timeout = 1 * time.Second
 	bm.writePolicy.CommitLevel = aerospike.COMMIT_MASTER
+	bm.writePolicy.MaxRetries = 10
 	bm.readPolicy = aerospike.NewPolicy()
 	bm.readPolicy.MaxRetries = 10
 
@@ -47,7 +48,8 @@ func (bm *BenchmarkAerospike) init() error {
 		hosts = append(hosts, aerospike.NewHost(h, p))
 	}
 	cp := aerospike.NewClientPolicy()
-	cp.ConnectionQueueSize = Cfg.Common.Thread
+	cp.ConnectionQueueSize = Cfg.Common.Thread * 2
+	cp.LimitConnectionsToQueueSize = true
 	bm.RP, err = aerospike.NewClientWithPolicyAndHost(cp, hosts...)
 	if err != nil {
 		return err
